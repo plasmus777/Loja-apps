@@ -1,39 +1,18 @@
 package com.github.plasmus777.model.user;
 
+import com.github.plasmus777.model.AuthToken;
+
 public class User {
 
     private long id;
     private String userName;
     private String email;
-    private String password;
+    private AuthToken authToken;
 
-    public User(String userName, String email, String password){
+    public User(String userName, String email, AuthToken authToken){
         setUserName(userName);
         setEmail(email);
-        setPassword(password);
-    }
-
-    //Unscrambles the saved password and returns it
-    public String getPassword() {
-        String[] chars = password.split("@");
-        String returnPassword = "";
-
-        for(String s: chars){
-            returnPassword += String.valueOf(Character.toChars(Integer.parseInt(s)));
-        }
-
-        return returnPassword;
-    }
-
-    //Saves a scrambled password to avoid saving it as plain text
-    public void setPassword(String password) {
-        String scrambledPassword = "";
-        for(char c: password.toCharArray()){
-            int value = c;
-
-            scrambledPassword += c + "@";
-        }
-        this.password = scrambledPassword;
+        setAuthToken(authToken);
     }
 
     public String getEmail() {
@@ -60,6 +39,14 @@ public class User {
         this.id = id;
     }
 
+    public AuthToken getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(AuthToken authToken) {
+        this.authToken = authToken;
+    }
+
     @Override
     public String toString() {
         return "Usuário: " + getUserName() + ", id = " + getId() +
@@ -72,14 +59,14 @@ public class User {
         if(!(obj instanceof User))return false;
 
         //Verify class attributes
-        if(this.getUserName() == null || this.getEmail() == null || this.getPassword() == null)return false;
+        if(this.getUserName() == null || this.getEmail() == null || this.getAuthToken() == null)return false;
 
         //Verify obj (User) attributes
         User user = (User) obj;
-        if(user.getUserName() == null || user.getEmail() == null || user.getPassword() == null)return false;
+        if(user.getUserName() == null || user.getEmail() == null || user.getAuthToken() == null)return false;
 
         return (this.getUserName().equals(user.getUserName()) && this.getEmail().equals(user.getEmail()) &&
-                this.getPassword().equals(user.getPassword()));
+                this.getAuthToken().equals(user.getAuthToken()));
 
     }
 }

@@ -40,8 +40,9 @@ public class UserService implements Service<User>{
             } else if(user.getEmail() == null || user.getEmail().isBlank()){
                 System.err.println("O e-mail do usuário é inválido e, portanto, não foi possível adicioná-lo ao banco de dados.");
                 return false;
-            } else if(user.getPassword() == null || user.getPassword().isBlank()){
-                System.err.println("A senha do usuário é inválida e, portanto, não foi possível adicioná-lo ao banco de dados.");
+            } else if(user.getAuthToken() == null || user.getAuthToken().getEmail() == null || user.getAuthToken().getEmail().isBlank() ||
+                        user.getAuthToken().getPassword() == null || user.getAuthToken().getPassword().isBlank()){
+                System.err.println("O token do usuário é inválido e, portanto, não foi possível adicioná-lo ao banco de dados.");
                 return false;
             }
 
@@ -74,7 +75,8 @@ public class UserService implements Service<User>{
         if(user1.getId() <=0 ||
                 user1.getEmail() == null || user1.getEmail().isBlank() ||
                 user1.getUserName() == null || user1.getUserName().isBlank() ||
-                user1.getPassword() == null || user1.getPassword().isBlank()){
+                user1.getAuthToken().getEmail().isBlank() ||
+                user1.getAuthToken().getPassword() == null || user1.getAuthToken().getPassword().isBlank()){
             System.err.println("O usuário não pode ser atualizado, pois seus atributos são inválidos.");
             return false;
         }
@@ -82,7 +84,8 @@ public class UserService implements Service<User>{
         if(user2.getId() <=0 ||
                 user2.getEmail() == null || user2.getEmail().isBlank() ||
                 user2.getUserName() == null || user2.getUserName().isBlank() ||
-                user2.getPassword() == null || user2.getPassword().isBlank()){
+                user2.getAuthToken().getEmail().isBlank() ||
+                user2.getAuthToken().getPassword() == null || user2.getAuthToken().getPassword().isBlank()){
             System.err.println("O usuário não pode ser atualizado, pois os atributos de atualização são inválidos.");
             return false;
         }
@@ -96,7 +99,8 @@ public class UserService implements Service<User>{
                 user.getId() <= 0 ||
                 user.getUserName() == null || user.getUserName().isBlank() ||
                 user.getEmail() == null || user.getEmail().isBlank() ||
-                user.getPassword() == null || user.getPassword().isBlank()){
+                user.getAuthToken().getEmail().isBlank() ||
+                user.getAuthToken().getPassword() == null || user.getAuthToken().getPassword().isBlank()){
             System.err.println("Não é possível apagar um usuário inválido do banco de dados.");
             return false;
         } else return getUserDatabase().delete(user);
@@ -150,7 +154,7 @@ public class UserService implements Service<User>{
         List<User> list = getUserDatabase().listAll();
         if(!list.isEmpty()){
             System.out.println("===================================");
-            System.out.println("      Usuários cadastrados");
+            System.out.println("      Usuários Cadastrados");
             System.out.println("===================================");
             for(User u: list){
                 System.out.println(u);

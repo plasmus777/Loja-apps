@@ -46,7 +46,12 @@ public class ApplicationService implements Service<Application>{
                     application.getPublisher().getAgencyName() == null || application.getPublisher().getAgencyName().isBlank() ||
                     application.getPublisher().getEmail() == null || application.getPublisher().getEmail().isBlank() ||
                     application.getPublisher().getUserName() == null || application.getPublisher().getUserName().isBlank() ||
-                    application.getPublisher().getPassword() == null || application.getPublisher().getPassword().isBlank()){
+
+                    application.getPublisher().getAuthToken() == null ||
+                        application.getPublisher().getAuthToken().getEmail() == null ||
+                        application.getPublisher().getAuthToken().getEmail().isBlank() ||
+                        application.getPublisher().getAuthToken().getPassword() == null ||
+                        application.getPublisher().getAuthToken().getPassword().isBlank()){
                 System.err.println("O editor do aplicativo é inválido e, portanto, não foi possível adicioná-lo ao banco de dados.");
                 return false;
             } else if(application.getCategories() == null || application.getCategories().length == 0){
@@ -87,12 +92,19 @@ public class ApplicationService implements Service<Application>{
                 application1.getTitle() == null || application1.getTitle().isBlank() ||
                 application1.getDescription() == null || application1.getDescription().isBlank() ||
                 application1.getVersion() <= 0 ||
+
                 application1.getPublisher() == null ||
                 application1.getPublisher().getId() <= 0 ||
                     application1.getPublisher().getAgencyName() == null || application1.getPublisher().getAgencyName().isBlank() ||
                     application1.getPublisher().getEmail() == null || application1.getPublisher().getEmail().isBlank() ||
                     application1.getPublisher().getUserName() == null || application1.getPublisher().getUserName().isBlank() ||
-                    application1.getPublisher().getPassword() == null || application1.getPublisher().getPassword().isBlank() ||
+
+                    application1.getPublisher().getAuthToken() == null ||
+                        application1.getPublisher().getAuthToken().getEmail() == null ||
+                        application1.getPublisher().getAuthToken().getEmail().isBlank() ||
+                        application1.getPublisher().getAuthToken().getPassword() == null ||
+                        application1.getPublisher().getAuthToken().getPassword().isBlank() ||
+
                 application1.getCategories() == null || application1.getCategories().length == 0 ||
                 application1.getAboutUrl() == null || application1.getAboutUrl().isBlank() ||
                 application1.getDevelopmentUrl() == null || application1.getDevelopmentUrl().isBlank() ||
@@ -107,12 +119,19 @@ public class ApplicationService implements Service<Application>{
                 application2.getTitle() == null || application2.getTitle().isBlank() ||
                 application2.getDescription() == null || application2.getDescription().isBlank() ||
                 application2.getVersion() <= 0 ||
+
                 application2.getPublisher() == null ||
                     application2.getPublisher().getId() <= 0 ||
                     application2.getPublisher().getAgencyName() == null || application2.getPublisher().getAgencyName().isBlank() ||
                     application2.getPublisher().getEmail() == null || application2.getPublisher().getEmail().isBlank() ||
                     application2.getPublisher().getUserName() == null || application2.getPublisher().getUserName().isBlank() ||
-                    application2.getPublisher().getPassword() == null || application2.getPublisher().getPassword().isBlank() ||
+
+                    application2.getPublisher().getAuthToken() == null ||
+                        application2.getPublisher().getAuthToken().getEmail() == null ||
+                        application2.getPublisher().getAuthToken().getEmail().isBlank() ||
+                        application2.getPublisher().getAuthToken().getPassword() == null ||
+                        application2.getPublisher().getAuthToken().getPassword().isBlank() ||
+
                 application2.getCategories() == null || application2.getCategories().length == 0 ||
                 application2.getAboutUrl() == null || application2.getAboutUrl().isBlank() ||
                 application2.getDevelopmentUrl() == null || application2.getDevelopmentUrl().isBlank() ||
@@ -134,11 +153,18 @@ public class ApplicationService implements Service<Application>{
                 application.getDescription() == null || application.getDescription().isBlank() ||
                 application.getVersion() <= 0 ||
                 application.getPublisher() == null ||
+
                 application.getPublisher().getId() <= 0 ||
                     application.getPublisher().getAgencyName() == null || application.getPublisher().getAgencyName().isBlank() ||
                     application.getPublisher().getEmail() == null || application.getPublisher().getEmail().isBlank() ||
                     application.getPublisher().getUserName() == null || application.getPublisher().getUserName().isBlank() ||
-                    application.getPublisher().getPassword() == null || application.getPublisher().getPassword().isBlank() ||
+
+                    application.getPublisher().getAuthToken() == null ||
+                    application.getPublisher().getAuthToken().getEmail() == null ||
+                        application.getPublisher().getAuthToken().getEmail().isBlank() ||
+                        application.getPublisher().getAuthToken().getPassword() == null ||
+                        application.getPublisher().getAuthToken().getPassword().isBlank() ||
+
                 application.getCategories() == null || application.getCategories().length == 0 ||
                 application.getAboutUrl() == null || application.getAboutUrl().isBlank() ||
                 application.getDevelopmentUrl() == null || application.getDevelopmentUrl().isBlank() ||
@@ -190,7 +216,7 @@ public class ApplicationService implements Service<Application>{
         List<Application> list = getApplicationDatabase().listAll();
         if(!list.isEmpty()){
             System.out.println("===================================");
-            System.out.println("     Aplicativos cadastrados");
+            System.out.println("     Aplicativos Cadastrados");
             System.out.println("===================================");
             for(Application a: list){
                 System.out.println(a);
