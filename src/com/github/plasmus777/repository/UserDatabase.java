@@ -17,35 +17,65 @@ public class UserDatabase implements Database<User>{
     public boolean save(User user) {
 
         if(user == null){
-            System.err.println("Um usuário nulo não pode ser salvo no banco de dados.");
+            System.err.println("Não é possível salvar um usuário nulo no banco de dados.");
             return false;
         } else if(users.contains(user)){
             System.err.println("O usuário a ser salvo já existe no banco de dados.");
             return false;
+        } else {
+            users.add(user);
+            System.out.println("O usuário \"" + user.getUserName() + "\" foi adicionado ao banco de dados.");
+            return true;
         }
-
-        users.add(user);
-
-        return true;
     }
 
     @Override
-    public boolean update(User user) {
-        return false;
+    public boolean update(User user1, User user2) {
+        if(user1 == null || !users.contains(user1)){
+            System.err.println("O usuário a ser atualizado não existe no banco de dados.");
+            return false;
+        } else if(user2 == null){
+            System.err.println("O usuário não pode ser atualizado com um valor nulo.");
+            return false;
+        } else {
+            System.out.println("O usuário \"" + user1.getUserName() + "\" foi atualizado com as informações de: ");
+            System.out.println(user1);
+            users.set(users.indexOf(user1), user2);
+            System.out.println("Para: ");
+            System.out.println(user1);
+            return true;
+        }
     }
 
     @Override
     public boolean delete(User user) {
-        return false;
+        if(user == null || !users.contains(user)){
+            System.err.println("O usuário a ser apagado não existe no banco de dados.");
+           return false;
+        } else {
+            users.remove(user);
+            System.out.println("O usuário \"" + user.getUserName() + "\" foi removido do banco de dados.");
+            return true;
+        }
     }
 
+    //Searches a user by its id - returns null if it does not exist
     @Override
     public User search(long id) {
+        if(users.isEmpty()){
+            System.out.println("O banco de dados está vazio.");
+        } else {
+            for(User user: users){
+                if(user.getId() == id){
+                    return user;
+                }
+            }
+        }
         return null;
     }
 
     @Override
     public List<User> listAll() {
-        return List.of();
+        return users;
     }
 }

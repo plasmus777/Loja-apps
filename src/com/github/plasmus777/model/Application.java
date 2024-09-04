@@ -2,7 +2,9 @@ package com.github.plasmus777.model;
 
 import com.github.plasmus777.model.user.Publisher;
 
-public class Application {
+import java.util.Arrays;
+
+public class Application implements Comparable<Application>{
 
     private long id;
     private String title;
@@ -132,37 +134,51 @@ public class Application {
                 "\nSHA-256: " + getSha256();
     }
 
-    /*
-    private long id;
-    private String title;
-    private String description;
-    private float version;
-    private boolean verified;
-    private Publisher publisher;
-    private Category[] categories;
-    private String aboutUrl;
-    private String developmentUrl;
-    private String md5;
-    private String sha256;
-    */
-
     @Override
     public boolean equals(Object obj) {
         //Object is not an Application
         if(!(obj instanceof Application)) return false;
 
         //Verify class attributes
-        if(this.getId() <= 0 || this.getTitle() == null || this.getDescription() == null || this.getVersion() <= 0 ||
-                this.getPublisher() == null || this.getCategories() == null || this.getAboutUrl() == null ||
-                this.getDevelopmentUrl() == null || this.getMd5() == null || this.getSha256() == null) return false;
+        if(this.getId() <= 0 || this.getTitle() == null || this.getDescription() == null || this.getPublisher() == null ||
+                this.getCategories() == null || this.getAboutUrl() == null || this.getDevelopmentUrl() == null ||
+                this.getMd5() == null || this.getSha256() == null)
+            return false;
 
         //Verify obj (Application) attributes
         Application application = (Application) obj;
         if(application.getId() <= 0 || application.getTitle() == null || application.getDescription() == null ||
-                application.getVersion() <= 0 || application.getPublisher() == null || application.getCategories() == null ||
-                application.getAboutUrl() == null || application.getDevelopmentUrl() == null || application.getMd5() == null ||
-                application.getSha256() == null) return false;
+                application.getPublisher() == null || application.getCategories() == null || application.getAboutUrl() == null ||
+                application.getDevelopmentUrl() == null || application.getMd5() == null || application.getSha256() == null)
+            return false;
 
-        return (this.getId() == application.getId());
+        //Ignore id and version, since the id may be different for creating the same application and the version can be modified as well
+        return (this.getTitle().equals(application.getTitle()) && this.getDescription().equals(application.getDescription()) &&
+                this.isVerified() == application.isVerified() && this.getPublisher().equals(application.getPublisher()) &&
+                Arrays.equals(this.getCategories(), application.getCategories()) && this.getAboutUrl().equals(application.getAboutUrl()) &&
+                this.getDevelopmentUrl().equals(application.getDevelopmentUrl()) && this.getMd5().equals(application.getMd5()) &&
+                this.getSha256().equals(application.getSha256()));
+    }
+
+    @Override
+    public int compareTo(Application application) {
+        //Order by application title
+        int compareTitle = this.getTitle().compareTo(application.getTitle());
+
+        //Same title - cannot be compared
+        if(compareTitle == 0){
+            //Order by the publisher's agency names
+            int comparePublisher = this.getPublisher().getAgencyName().compareTo(application.getPublisher().getAgencyName());
+
+            //Same publisher - cannot be compared
+            if(comparePublisher == 0){
+                //Order by application version
+                return Float.compare(this.getVersion(), application.getVersion());
+            }
+
+            return comparePublisher;
+        }
+
+        return compareTitle;
     }
 }

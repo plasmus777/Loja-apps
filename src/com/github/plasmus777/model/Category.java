@@ -1,36 +1,23 @@
 package com.github.plasmus777.model;
 
-public class Category {
-    private long id;
-    private String name;
-    private String description;
+public enum Category{
+    INTERNET, UTILITIES, SYSTEM, AUDIO, VIDEO, EDUCATION, GRAPHICS, OFICCE, DEVELOPMENT, PRODUCTIVITY, GAMES;
 
-    public Category(String name, String description){
-        setName(name);
-        setDescription(description);
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    @Override
+    public String toString() {
+        return switch (this) {
+            case INTERNET -> "Internet";
+            case UTILITIES -> "Utilidades";
+            case SYSTEM -> "Sistema";
+            case AUDIO -> "Áudio";
+            case VIDEO -> "Vídeo";
+            case EDUCATION -> "Educação";
+            case GRAPHICS -> "Gráficos";
+            case OFICCE -> "Office";
+            case DEVELOPMENT -> "Desenvolvimento";
+            case PRODUCTIVITY -> "Produtividade";
+            case GAMES -> "Jogos";
+            default -> "Categoria Desconhecida";
+        };
     }
 }

@@ -68,18 +68,18 @@ public class User {
 
     @Override
     public boolean equals(Object obj) {
-        //Object is not an User
+        //Object is not a User
         if(!(obj instanceof User))return false;
 
         //Verify class attributes
-        if(this.getId() <= 0 || this.getUserName() == null || this.getEmail() == null || this.getPassword() == null)return false;
+        if(this.getUserName() == null || this.getEmail() == null || this.getPassword() == null)return false;
 
         //Verify obj (User) attributes
         User user = (User) obj;
-        if(user.getId() <= 0 || user.getUserName() == null || user.getEmail() == null || user.getPassword() == null)return false;
+        if(user.getUserName() == null || user.getEmail() == null || user.getPassword() == null)return false;
 
-        return (this.getId() == user.getId() && this.getUserName().equals(user.getUserName()) &&
-                this.getEmail().equals(user.getEmail()) && this.getPassword().equals(user.getPassword()));
+        return (this.getUserName().equals(user.getUserName()) && this.getEmail().equals(user.getEmail()) &&
+                this.getPassword().equals(user.getPassword()));
 
     }
 }
