@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDatabase implements Database<User>{
-
     List<User> users;
 
     public UserDatabase(){
@@ -15,7 +14,6 @@ public class UserDatabase implements Database<User>{
 
     @Override
     public boolean save(User user) {
-
         if(user == null){
             System.err.println("Não é possível salvar um usuário nulo no banco de dados.");
             return false;
@@ -40,9 +38,10 @@ public class UserDatabase implements Database<User>{
         } else {
             System.out.println("O usuário \"" + user1.getUserName() + "\" foi atualizado com as informações de: ");
             System.out.println(user1);
+            user2.setId(user1.getId());
             users.set(users.indexOf(user1), user2);
             System.out.println("Para: ");
-            System.out.println(user1);
+            System.out.println(user2);
             return true;
         }
     }
@@ -50,7 +49,7 @@ public class UserDatabase implements Database<User>{
     @Override
     public boolean delete(User user) {
         if(user == null || !users.contains(user)){
-            System.err.println("O usuário a ser apagado não existe no banco de dados.");
+            System.err.println("O usuário a ser removido não existe no banco de dados.");
            return false;
         } else {
             users.remove(user);
