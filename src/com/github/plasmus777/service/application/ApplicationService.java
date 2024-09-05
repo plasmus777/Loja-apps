@@ -30,10 +30,7 @@ public class ApplicationService implements Service<Application> {
             System.err.println("Não é possível adicionar um aplicativo nulo ao banco de dados.");
             return false;
         } else {
-            if(application.getId() <= 0){
-                System.err.println("O id do aplicativo é inválido e, portanto, não foi possível adicioná-lo ao banco de dados.");
-                return false;
-            } else if(application.getTitle() == null || application.getTitle().isBlank()){
+            if(application.getTitle() == null || application.getTitle().isBlank()){
                 System.err.println("O título do aplicativo é inválido e, portanto, não foi possível adicioná-lo ao banco de dados.");
                 return false;
             } else if(application.getDescription() == null || application.getDescription().isBlank()){

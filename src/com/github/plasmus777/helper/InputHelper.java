@@ -61,19 +61,28 @@ public class InputHelper {
 
     //Creates a loop to ask the user for a valid boolean input (true or false)
     public static boolean getValidBoolean(String askMessage, String errorMessage, Scanner scanner){
-        boolean verified = false;
-        boolean value = false;
+        System.out.println(askMessage);
+        while(!scanner.hasNextBoolean()){
+            System.out.println(errorMessage);
+            scanner.next();
+        }
+        return scanner.nextBoolean();
+    }
+
+    //Creates a loop to ask the user for a valid input integer between two values - range: [minimum, maximum]
+    public static int getValidOption(int minimum, int maximum, Scanner scanner){
+        int value = 0;
 
         do{
-            System.out.println(askMessage);
-            while(!scanner.hasNextBoolean()){
-                System.out.println(errorMessage);
+            System.out.println("Por favor, selecione uma opção válida de " + minimum + " a " + maximum + ": ");
+            while(!scanner.hasNextInt()){
+                System.out.println("A opção selecionada é inválida. Por favor, tente novamente.");
                 scanner.next();
             }
-            value = scanner.nextBoolean();
-            verified = true;
+            value = scanner.nextInt();
 
-        } while (!verified);
+
+        } while (value > maximum || value < minimum);
 
         return value;
     }

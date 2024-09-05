@@ -10,6 +10,7 @@ public class Publisher extends User {
     public Publisher(String userName, String email, AuthToken authToken, String agencyName, boolean verified) {
         super(userName, email, authToken);
         setAgencyName(agencyName);
+        setVerified(verified);
     }
 
     public String getAgencyName() {
@@ -32,7 +33,7 @@ public class Publisher extends User {
     public String toString() {
         return super.toString() +
                 "\nNome do Editor: " + getAgencyName() +
-                (isVerified() ? "Editor Verificado" : "Editor Desconhecido");
+                (isVerified() ? "\nEditor Verificado" : "\nEditor Desconhecido");
     }
 
     @Override

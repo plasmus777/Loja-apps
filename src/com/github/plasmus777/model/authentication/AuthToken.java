@@ -37,7 +37,7 @@ public class AuthToken {
         String returnPassword = "";
 
         for(String s: chars){
-            returnPassword += String.valueOf(Character.toChars(Integer.parseInt(s)));
+                returnPassword += s.charAt(0);
         }
 
         return returnPassword;
@@ -47,8 +47,6 @@ public class AuthToken {
     public void setPassword(String password) {
         String scrambledPassword = "";
         for(char c: password.toCharArray()){
-            int value = c;
-
             scrambledPassword += c + "@";
         }
         this.scrambledPassword = scrambledPassword;

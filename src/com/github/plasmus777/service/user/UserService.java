@@ -33,10 +33,7 @@ public class UserService implements Service<User> {
             System.err.println("Não é possível adicionar um usuário nulo ao banco de dados.");
             return false;
         } else {
-            if(user.getId() <= 0){
-                System.err.println("O id do usuário é inválido e, portanto, não foi possível adicioná-lo ao banco de dados.");
-                return false;
-            } else if(user.getUserName() == null || user.getUserName().isBlank()){
+            if(user.getUserName() == null || user.getUserName().isBlank()){
                 System.err.println("O nome do usuário é inválido e, portanto, não foi possível adicioná-lo ao banco de dados.");
                 return false;
             } else if(user.getEmail() == null || user.getEmail().isBlank()){
