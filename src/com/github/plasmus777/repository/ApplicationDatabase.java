@@ -1,6 +1,6 @@
 package com.github.plasmus777.repository;
 
-import com.github.plasmus777.model.Application;
+import com.github.plasmus777.model.application.Application;
 
 import java.util.ArrayList;
 import java.util.List;

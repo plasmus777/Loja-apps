@@ -1,13 +1,15 @@
-package com.github.plasmus777.service;
+package com.github.plasmus777.service.user;
 
+import com.github.plasmus777.model.authentication.AuthToken;
 import com.github.plasmus777.model.user.Publisher;
 import com.github.plasmus777.model.user.User;
 import com.github.plasmus777.repository.UserDatabase;
+import com.github.plasmus777.service.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserService implements Service<User>{
+public class UserService implements Service<User> {
 
     private UserDatabase userDatabase;
 
@@ -114,6 +116,32 @@ public class UserService implements Service<User>{
         } else return getUserDatabase().search(id);
     }
 
+    //Searches and return the user that has the exact same email and authentication token
+    public User searchExact(String email, AuthToken authToken){
+        User u = null;
+
+        if(email == null || email.isBlank() ||
+        authToken == null || authToken.getEmail() == null || authToken.getEmail().isBlank() ||
+        authToken.getPassword() == null || authToken.getPassword().isBlank() ||
+        authToken.getExpirationDate() == null){
+            System.err.println("Não é possível buscar um usuário exato no banco de dados com parâmetros inválidos.");
+            return u;
+        } else {
+            List<User> users = getUserDatabase().listAll();
+            if(users.isEmpty()){
+                System.out.println("O banco de dados está vazio.");
+            } else {
+                for(User user: users){
+                    if(user.getEmail().equals(email) && user.getAuthToken().equals(authToken)){
+                        return user;
+                    }
+                }
+            }
+
+            return u;
+        }
+    }
+
     //Searches a user using a string - returns a list containing all users that have matches in the search terms
     //(checking username and e-mail)
     @Override
@@ -161,5 +189,10 @@ public class UserService implements Service<User>{
                 System.out.println("===================================");
             }
         }
+    }
+
+    public boolean isPublisher(User user){
+        if(user instanceof Publisher) return true;
+        else return false;
     }
 }

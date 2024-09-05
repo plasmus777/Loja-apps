@@ -1,12 +1,14 @@
 package com.github.plasmus777.model.user;
 
+import com.github.plasmus777.model.authentication.AuthToken;
+
 public class Publisher extends User {
 
     private String agencyName;
     private boolean verified;
 
-    public Publisher(String userName, String email, String password, String agencyName, boolean verified) {
-        super(userName, email, password);
+    public Publisher(String userName, String email, AuthToken authToken, String agencyName, boolean verified) {
+        super(userName, email, authToken);
         setAgencyName(agencyName);
     }
 

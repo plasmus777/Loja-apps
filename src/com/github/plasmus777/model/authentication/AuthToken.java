@@ -1,6 +1,4 @@
-package com.github.plasmus777.model;
-
-import com.github.plasmus777.model.user.User;
+package com.github.plasmus777.model.authentication;
 
 import java.time.LocalDateTime;
 
@@ -62,5 +60,25 @@ public class AuthToken {
 
     public void setExpirationDate(LocalDateTime expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        //Object is not an AuthToken
+        if(!(obj instanceof AuthToken))return false;
+
+        //Verify class attributes
+        if(this.getEmail() == null || this.getEmail().isBlank() ||
+                this.getPassword() == null || this.getPassword().isBlank() ||
+                this.getExpirationDate() == null) return false;
+
+        //Verify obj (AuthToken) attributes
+        AuthToken authToken = (AuthToken) obj;
+        if(authToken.getEmail() == null || authToken.getEmail().isBlank() ||
+                authToken.getPassword() == null || authToken.getPassword().isBlank() ||
+                authToken.getExpirationDate() == null) return false;
+
+        return (this.getEmail().equals(authToken.getEmail()) &&
+                this.getPassword().equals(authToken.getPassword()));
     }
 }

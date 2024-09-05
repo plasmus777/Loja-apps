@@ -1,7 +1,7 @@
-package com.github.plasmus777.model;
+package com.github.plasmus777.model.application;
 
 public enum Category{
-    INTERNET, UTILITIES, SYSTEM, AUDIO, VIDEO, EDUCATION, GRAPHICS, OFICCE, DEVELOPMENT, PRODUCTIVITY, GAMES;
+    INTERNET, UTILITIES, SYSTEM, AUDIO, VIDEO, EDUCATION, GRAPHICS, OFFICE, DEVELOPMENT, PRODUCTIVITY, GAMES, OUTROS;
 
     @Override
     public String toString() {
@@ -13,11 +13,11 @@ public enum Category{
             case VIDEO -> "Vídeo";
             case EDUCATION -> "Educação";
             case GRAPHICS -> "Gráficos";
-            case OFICCE -> "Office";
+            case OFFICE -> "Office";
             case DEVELOPMENT -> "Desenvolvimento";
             case PRODUCTIVITY -> "Produtividade";
             case GAMES -> "Jogos";
-            default -> "Categoria Desconhecida";
+            default -> "Outros";
         };
     }
 }

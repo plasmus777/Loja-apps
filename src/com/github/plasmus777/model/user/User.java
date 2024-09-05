@@ -1,6 +1,6 @@
 package com.github.plasmus777.model.user;
 
-import com.github.plasmus777.model.AuthToken;
+import com.github.plasmus777.model.authentication.AuthToken;
 
 public class User {
 

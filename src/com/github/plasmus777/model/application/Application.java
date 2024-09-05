@@ -1,4 +1,4 @@
-package com.github.plasmus777.model;
+package com.github.plasmus777.model.application;
 
 import com.github.plasmus777.model.user.Publisher;
 

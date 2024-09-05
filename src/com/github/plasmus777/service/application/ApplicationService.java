@@ -1,12 +1,13 @@
-package com.github.plasmus777.service;
+package com.github.plasmus777.service.application;
 
-import com.github.plasmus777.model.Application;
+import com.github.plasmus777.model.application.Application;
 import com.github.plasmus777.repository.ApplicationDatabase;
+import com.github.plasmus777.service.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApplicationService implements Service<Application>{
+public class ApplicationService implements Service<Application> {
 
     private ApplicationDatabase applicationDatabase;
     private static long CURRENT_ID = 1;
