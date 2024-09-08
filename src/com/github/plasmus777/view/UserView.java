@@ -4,16 +4,17 @@ import com.github.plasmus777.helper.InputHelper;
 import com.github.plasmus777.model.authentication.AuthToken;
 import com.github.plasmus777.model.user.Publisher;
 import com.github.plasmus777.model.user.User;
+import com.github.plasmus777.service.Service;
 import com.github.plasmus777.service.user.UserService;
 
 import java.util.Scanner;
 
 //Class responsible for managing User objects
 public class UserView extends View{
-    private final UserService userService;
+    private final Service<User, AuthToken> userService;
     private final Scanner scanner;
 
-    public UserView(UserService userService, Scanner scanner){
+    public UserView(Service<User, AuthToken> userService, Scanner scanner){
         this.userService = userService;
         this.scanner = scanner;
     }

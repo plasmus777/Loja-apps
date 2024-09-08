@@ -3,27 +3,28 @@ package com.github.plasmus777.service.user;
 import com.github.plasmus777.model.authentication.AuthToken;
 import com.github.plasmus777.model.user.Publisher;
 import com.github.plasmus777.model.user.User;
+import com.github.plasmus777.repository.Database;
 import com.github.plasmus777.repository.UserDatabase;
 import com.github.plasmus777.service.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserService implements Service<User> {
+public class UserService implements Service<User, AuthToken> {
 
-    private UserDatabase userDatabase;
+    private Database<User> userDatabase;
 
     private static long CURRENT_ID = 1;
 
-    public UserService(UserDatabase userDatabase){
+    public UserService(Database<User> userDatabase){
         setUserDatabase(userDatabase);
     }
 
-    public UserDatabase getUserDatabase() {
+    public Database<User> getUserDatabase() {
         return userDatabase;
     }
 
-    public void setUserDatabase(UserDatabase userDatabase) {
+    public void setUserDatabase(Database<User> userDatabase) {
         this.userDatabase = userDatabase;
     }
 
@@ -114,6 +115,7 @@ public class UserService implements Service<User> {
     }
 
     //Searches and return the user that has the exact same email and authentication token
+    @Override
     public User searchExact(String email, AuthToken authToken){
         User u = null;
 
@@ -185,6 +187,8 @@ public class UserService implements Service<User> {
                 System.out.println(u);
                 System.out.println("===================================");
             }
+        } else {
+            System.out.println("Não há usuários cadastrados no sistema.");
         }
     }
 }

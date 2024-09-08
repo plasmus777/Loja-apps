@@ -2,6 +2,7 @@ package com.github.plasmus777.service.authentication;
 
 import com.github.plasmus777.model.authentication.AuthToken;
 import com.github.plasmus777.model.user.User;
+import com.github.plasmus777.service.Service;
 import com.github.plasmus777.service.user.UserService;
 
 public class AuthService {
@@ -9,7 +10,7 @@ public class AuthService {
     private User loggedUser;
     private AuthToken currentToken;
 
-    private final UserService userService;
+    private final Service<User, AuthToken> userService;
 
     //Class used for authentication purposes within the system
     public AuthService(UserService userService){

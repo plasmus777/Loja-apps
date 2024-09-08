@@ -1,26 +1,29 @@
 package com.github.plasmus777.service.application;
 
 import com.github.plasmus777.model.application.Application;
+import com.github.plasmus777.model.authentication.AuthToken;
+import com.github.plasmus777.model.user.Publisher;
 import com.github.plasmus777.repository.ApplicationDatabase;
+import com.github.plasmus777.repository.Database;
 import com.github.plasmus777.service.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApplicationService implements Service<Application> {
+public class ApplicationService implements Service<Application, Publisher> {
 
-    private ApplicationDatabase applicationDatabase;
+    private Database<Application> applicationDatabase;
     private static long CURRENT_ID = 1;
 
-    public ApplicationService(ApplicationDatabase applicationDatabase){
+    public ApplicationService(Database<Application> applicationDatabase){
         setApplicationDatabase(applicationDatabase);
     }
 
-    public ApplicationDatabase getApplicationDatabase() {
+    public Database<Application> getApplicationDatabase() {
         return applicationDatabase;
     }
 
-    public void setApplicationDatabase(ApplicationDatabase applicationDatabase) {
+    public void setApplicationDatabase(Database<Application> applicationDatabase) {
         this.applicationDatabase = applicationDatabase;
     }
 
@@ -181,6 +184,38 @@ public class ApplicationService implements Service<Application> {
         } else return getApplicationDatabase().search(id);
     }
 
+    //Searches and return the user that has the exact same email and authentication token
+    @Override
+    public Application searchExact(String title, Publisher publisher){
+
+        if(title == null || title.isBlank() ||
+                publisher == null ||
+                    publisher.getId() <= 0 ||
+                    publisher.getEmail() == null || publisher.getEmail().isBlank() ||
+                    publisher.getUserName() == null || publisher.getUserName().isBlank() ||
+                    publisher.getAgencyName() == null || publisher.getAgencyName().isBlank() ||
+                    publisher.getAuthToken() == null ||
+                        publisher.getAuthToken().getEmail() == null || publisher.getAuthToken().getEmail().isBlank() ||
+                        publisher.getAuthToken().getPassword() == null || publisher.getAuthToken().getPassword().isBlank() ||
+                        publisher.getAuthToken().getExpirationDate() == null){
+            System.err.println("Não é possível buscar um aplicativo exato no banco de dados com parâmetros inválidos.");
+            return null;
+        } else {
+            List<Application> applications = getApplicationDatabase().listAll();
+            if(applications.isEmpty()){
+                System.out.println("O banco de dados está vazio.");
+            } else {
+                for(Application application: applications){
+                    if(application.getTitle().equals(title) && application.getPublisher().equals(publisher)){
+                        return application;
+                    }
+                }
+            }
+
+            return null;
+        }
+    }
+
     //Searches an application using a string - returns a list containing all applications that have matches in the search terms
     //(checking the application's title, publisher's agency name and description)
     @Override
@@ -220,6 +255,8 @@ public class ApplicationService implements Service<Application> {
                 System.out.println(a);
                 System.out.println("===================================");
             }
+        } else {
+            System.out.println("Não há aplicativos cadastrados no sistema.");
         }
     }
 }
