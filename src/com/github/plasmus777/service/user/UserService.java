@@ -187,9 +187,4 @@ public class UserService implements Service<User> {
             }
         }
     }
-
-    public boolean isPublisher(User user){
-        if(user instanceof Publisher) return true;
-        else return false;
-    }
 }

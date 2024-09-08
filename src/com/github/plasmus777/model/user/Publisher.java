@@ -30,6 +30,11 @@ public class Publisher extends User {
     }
 
     @Override
+    public boolean isPublisher() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return super.toString() +
                 "\nNome do Editor: " + getAgencyName() +

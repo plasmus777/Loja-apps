@@ -47,6 +47,10 @@ public class User {
         this.authToken = authToken;
     }
 
+    public boolean isPublisher(){
+        return false;
+    }
+
     @Override
     public String toString() {
         return "Usuário: " + getUserName() + ", id = " + getId() +
