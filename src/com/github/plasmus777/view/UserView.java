@@ -7,6 +7,7 @@ import com.github.plasmus777.model.user.User;
 import com.github.plasmus777.service.Service;
 import com.github.plasmus777.service.user.UserService;
 
+import java.util.List;
 import java.util.Scanner;
 
 //Class responsible for managing User objects
@@ -27,7 +28,7 @@ public class UserView extends View{
             System.out.println("       Sistema de Usuários");
             System.out.println("===================================");
             System.out.println("1 - Cadastrar Usuário");
-            System.out.println("2 - Atualizar Usuário");
+            System.out.println("2 - Atualizar Dados do Usuário");
             System.out.println("3 - Apagar Usuário");
             System.out.println("4 - Buscar Usuário");
             System.out.println("5 - Listar Usuários");
@@ -46,6 +47,7 @@ public class UserView extends View{
                     deleteUser();
                     break;
                 case 4:
+                    searchUser();
                     break;
                 case 5:
                     listUsers();
@@ -125,7 +127,7 @@ public class UserView extends View{
     private void updateUser(){
         cleanTerminal();
         System.out.println("===================================");
-        System.out.println("       Atualizar Usuário");
+        System.out.println("     Atualizar Dados do Usuário");
         System.out.println("===================================");
 
         String oldEmail = InputHelper.getValidString("Por favor, informe o e-mail do usuário: ",
@@ -163,7 +165,7 @@ public class UserView extends View{
                 System.out.println("=========================================================");
                 System.out.println("Atualizando o usuário \"" + user.getUserName() + "\"");
                 System.out.println("=========================================================");
-                System.out.println("1 - Concluir Atualização");
+                System.out.println("1 - Concluir Atualização de Dados");
                 System.out.println("2 - Atualizar Nome de Usuário");
                 System.out.println("3 - Atualizar E-mail");
                 System.out.println("4 - Atualizar Senha");
@@ -176,7 +178,7 @@ public class UserView extends View{
                 int option = InputHelper.getValidOption(1, 6, scanner);
                 switch(option){
                     case 1:
-                        System.out.println("Concluindo Atualização...");
+                        System.out.println("Concluindo Atualização de Dados...");
                         updating = false;
                         break;
                     case 2:
@@ -184,7 +186,7 @@ public class UserView extends View{
                                 "Apelido inválido! Por favor, tente novamente.", scanner);
                         break;
                     case 3:
-                        newEmail = InputHelper.getValidString("Por favor, informe um novo e-mail do usuário: ",
+                        newEmail = InputHelper.getValidString("Por favor, informe um novo e-mail para o usuário: ",
                                 "E-mail inválido! Por favor, tente novamente.", scanner);
                         break;
                     case 4:
@@ -272,6 +274,62 @@ public class UserView extends View{
 
     //Id, exact and list
     private void searchUser(){
+        cleanTerminal();
+        System.out.println("===================================");
+        System.out.println("         Buscar Usuário");
+        System.out.println("===================================");
+
+        boolean searching = true;
+        while(searching){
+            System.out.println("1 - Voltar ao Menu de Usuário");
+            System.out.println("2 - Buscar Usuário por ID");
+            System.out.println("3 - Buscar usuário por Termos de Pesquisa");
+
+            int option = InputHelper.getValidOption(1, 3, scanner);
+            switch (option){
+                case 1: //Return to main menu
+                    System.out.println("Retornando ao Menu de Usuário...");
+                    searching = false;
+                    break;
+                case 2: //Search by id
+                    User u = null;
+                    long id = InputHelper.getPositiveLong("Por favor, informe o ID a ser pesquisado (> 0): ",
+                            "ID inválido! Por favor, tente novamente.", scanner);
+                    u = userService.search(id);
+                    if(u != null){
+                        System.out.println("===================================");
+                        System.out.println("      Resultados da Pesquisa");
+                        System.out.println("===================================");
+                        System.out.println(u);
+                        System.out.println("===================================");
+                    } else {
+                        System.out.println("===================================");
+                        System.out.println("         Sem Resultados");
+                        System.out.println("===================================");
+                    }
+                    break;
+                case 3: //Search by generic String
+                    String search = InputHelper.getValidString("Por favor, informe os termos de pesquisa: ",
+                            "Termos de pesquisa inválidos! Por favor, tente novamente.", scanner);
+                    List<User> results = userService.search(search);
+                    if(results != null && !results.isEmpty()){
+                        System.out.println("===================================");
+                        System.out.println("      Resultados da Pesquisa");
+                        System.out.println("===================================");
+                        for(User usr: results){
+                            System.out.println(usr);
+                            System.out.println("===================================");
+                        }
+                    } else {
+                        System.out.println("===================================");
+                        System.out.println("         Sem Resultados");
+                        System.out.println("===================================");
+                    }
+                    break;
+                default:
+                    System.err.println("Opção inexistente!");
+            }
+        }
 
     }
 
