@@ -42,6 +42,7 @@ public class UserView extends View{
                     updateUser();
                     break;
                 case 3:
+                    deleteUser();
                     break;
                 case 4:
                     break;
@@ -231,7 +232,41 @@ public class UserView extends View{
     }
 
     private void deleteUser(){
+        cleanTerminal();
+        System.out.println("===================================");
+        System.out.println("       Apagar Usuário");
+        System.out.println("===================================");
 
+        String email = InputHelper.getValidString("Por favor, informe o e-mail do usuário: ",
+                "E-mail inválido! Por favor, tente novamente.", scanner);
+
+        cleanTerminal();
+
+        String password = InputHelper.getValidString("Por favor, informe a senha do usuário: ",
+                "Senha inválida! Por favor, tente novamente.", scanner);
+
+        cleanTerminal();
+
+        AuthToken token = new AuthToken(email, password);
+        User user = userService.searchExact(email, token);
+        if (user == null) {
+            System.out.println("O usuário não foi encontrado no banco de dados e, portanto, não pode ser removido.");
+        } else {
+            System.out.println("================================================");
+            System.out.println("Apagando o Usuário \"" + user.getUserName() + "\"");
+            System.out.println("================================================");
+            System.out.println(user);
+            System.out.println("================================================");
+            boolean confirmDeletion = InputHelper.getValidBoolean("Você tem certeza de que deseja remover o usuário selecionado (reponda com true - false)? ",
+                    "Resposta inválida! Por favor, tente novamente.", scanner);
+
+            if(confirmDeletion){
+                if(!userService.delete(user)){
+                    System.err.println("O usuário \"" + user.getUserName() + "\" não foi removido devido a um erro.");
+                }
+            }
+
+        }
     }
 
     //Id, exact and list
