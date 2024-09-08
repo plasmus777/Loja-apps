@@ -42,7 +42,9 @@ public class ApplicationDatabase implements Database<Application>{
             System.out.println(application1);
             application2.setId(application1.getId());
             applications.set(applications.indexOf(application1), application2);
+            System.out.println("--------------------------");
             System.out.println("Para: ");
+            System.out.println("--------------------------");
             System.out.println(application2);
             return true;
         }

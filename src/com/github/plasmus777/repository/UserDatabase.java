@@ -40,7 +40,9 @@ public class UserDatabase implements Database<User>{
             System.out.println(user1);
             user2.setId(user1.getId());
             users.set(users.indexOf(user1), user2);
+            System.out.println("--------------------------");
             System.out.println("Para: ");
+            System.out.println("--------------------------");
             System.out.println(user2);
             return true;
         }

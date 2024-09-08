@@ -24,6 +24,7 @@ public class Main {
 
         //Utilize interactive views to run the program
         View userView = new UserView(userService, scanner);
+
         userView.show();
     }
 }
