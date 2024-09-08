@@ -10,7 +10,6 @@ public class Application implements Comparable<Application>{
     private String title;
     private String description;
     private float version;
-    private boolean verified;
     private Publisher publisher;
     private Category[] categories;
     private String aboutUrl;
@@ -18,7 +17,7 @@ public class Application implements Comparable<Application>{
     private String md5;
     private String sha256;
 
-    public Application(String title, String description, float version, boolean verified,
+    public Application(String title, String description, float version,
                        Publisher publisher, Category[] categories, String aboutUrl,
                        String developmentUrl, String md5, String sha256){
         setTitle(title);
@@ -65,11 +64,7 @@ public class Application implements Comparable<Application>{
     }
 
     public boolean isVerified() {
-        return verified;
-    }
-
-    public void setVerified(boolean verified) {
-        this.verified = verified;
+        return publisher.isVerified();
     }
 
     public Publisher getPublisher(){

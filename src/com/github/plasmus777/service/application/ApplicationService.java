@@ -191,13 +191,13 @@ public class ApplicationService implements Service<Application, Publisher> {
         if(title == null || title.isBlank() ||
                 publisher == null ||
                     publisher.getId() <= 0 ||
-                    publisher.getEmail() == null || publisher.getEmail().isBlank() ||
-                    publisher.getUserName() == null || publisher.getUserName().isBlank() ||
-                    publisher.getAgencyName() == null || publisher.getAgencyName().isBlank() ||
-                    publisher.getAuthToken() == null ||
-                        publisher.getAuthToken().getEmail() == null || publisher.getAuthToken().getEmail().isBlank() ||
-                        publisher.getAuthToken().getPassword() == null || publisher.getAuthToken().getPassword().isBlank() ||
-                        publisher.getAuthToken().getExpirationDate() == null){
+                        publisher.getEmail() == null || publisher.getEmail().isBlank() ||
+                        publisher.getUserName() == null || publisher.getUserName().isBlank() ||
+                        publisher.getAgencyName() == null || publisher.getAgencyName().isBlank() ||
+                        publisher.getAuthToken() == null ||
+                            publisher.getAuthToken().getEmail() == null || publisher.getAuthToken().getEmail().isBlank() ||
+                            publisher.getAuthToken().getPassword() == null || publisher.getAuthToken().getPassword().isBlank() ||
+                            publisher.getAuthToken().getExpirationDate() == null){
             System.err.println("Não é possível buscar um aplicativo exato no banco de dados com parâmetros inválidos.");
             return null;
         } else {

@@ -1,6 +1,7 @@
 package com.github.plasmus777.service.authentication;
 
 import com.github.plasmus777.model.authentication.AuthToken;
+import com.github.plasmus777.model.user.Publisher;
 import com.github.plasmus777.model.user.User;
 import com.github.plasmus777.service.Service;
 import com.github.plasmus777.service.user.UserService;
@@ -13,7 +14,7 @@ public class AuthService {
     private final Service<User, AuthToken> userService;
 
     //Class used for authentication purposes within the system
-    public AuthService(UserService userService){
+    public AuthService(Service<User, AuthToken> userService){
         this.userService = userService;
     }
 
@@ -63,5 +64,11 @@ public class AuthService {
     public boolean hasLoggedUser(){
         if (loggedUser != null) return true;
         else return false;
+    }
+
+    public boolean hasLoggedPublisher(){
+        if(hasLoggedUser()){
+            return getLoggedUser() instanceof Publisher;
+        } else return false;
     }
 }
