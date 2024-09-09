@@ -1,9 +1,7 @@
 package com.github.plasmus777.service.application;
 
 import com.github.plasmus777.model.application.Application;
-import com.github.plasmus777.model.authentication.AuthToken;
 import com.github.plasmus777.model.user.Publisher;
-import com.github.plasmus777.repository.ApplicationDatabase;
 import com.github.plasmus777.repository.Database;
 import com.github.plasmus777.service.Service;
 
@@ -258,5 +256,10 @@ public class ApplicationService implements Service<Application, Publisher> {
         } else {
             System.out.println("Não há aplicativos cadastrados no sistema.");
         }
+    }
+
+    @Override
+    public List<Application> getList(){
+        return applicationDatabase.listAll();
     }
 }

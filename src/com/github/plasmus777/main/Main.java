@@ -41,5 +41,6 @@ public class Main {
 
         //Run program through the main view
         mainView.show();
+
     }
 }

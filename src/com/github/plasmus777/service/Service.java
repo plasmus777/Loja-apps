@@ -10,4 +10,5 @@ public interface Service<T1, T2>{
     T1 searchExact(String search, T2 obj);
     List<T1> search(String search);
     void listAll();
+    List<T1> getList();
 }

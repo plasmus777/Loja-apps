@@ -4,7 +4,6 @@ import com.github.plasmus777.model.authentication.AuthToken;
 import com.github.plasmus777.model.user.Publisher;
 import com.github.plasmus777.model.user.User;
 import com.github.plasmus777.repository.Database;
-import com.github.plasmus777.repository.UserDatabase;
 import com.github.plasmus777.service.Service;
 
 import java.util.ArrayList;
@@ -190,5 +189,10 @@ public class UserService implements Service<User, AuthToken> {
         } else {
             System.out.println("Não há usuários cadastrados no sistema.");
         }
+    }
+
+    @Override
+    public List<User> getList(){
+        return userDatabase.listAll();
     }
 }

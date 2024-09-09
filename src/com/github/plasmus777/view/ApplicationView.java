@@ -5,7 +5,9 @@ import com.github.plasmus777.main.Main;
 import com.github.plasmus777.model.application.Application;
 import com.github.plasmus777.model.application.Category;
 import com.github.plasmus777.model.user.Publisher;
+import com.github.plasmus777.repository.ApplicationDatabase;
 import com.github.plasmus777.service.Service;
+import com.github.plasmus777.service.application.ApplicationService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +17,17 @@ public class ApplicationView extends View{
     private final Service<Application, Publisher> applicationService;
     private final Scanner scanner;
 
+    //Create a database/service for installed applications
+    private final ApplicationDatabase installedApplicationsDatabase;
+    private final Service<Application, Publisher> installedApplicationsService;
+
     public ApplicationView(Service<Application, Publisher> applicationService, Scanner scanner){
         this.applicationService = applicationService;
         this.scanner = scanner;
+
+        //Initialize installed applications (database and service)
+        installedApplicationsDatabase = new ApplicationDatabase();
+        installedApplicationsService = new ApplicationService(installedApplicationsDatabase);
     }
 
 
@@ -33,13 +43,17 @@ public class ApplicationView extends View{
             System.out.println("1 - Retornar ao Menu Principal");
             System.out.println("2 - Listar Aplicativos");
             System.out.println("3 - Buscar Aplicativo");
+            System.out.println("4 - Listar Aplicativos Instalados");
+            System.out.println("5 - Instalar Aplicativo");
+            System.out.println("6 - Desinstalar Aplicativo");
+            System.out.println("7 - Atualizar Aplicativos Instalados");
             if(Main.authService.hasLoggedPublisher()) {
-                System.out.println("4 - Cadastrar Aplicativo");
-                System.out.println("5 - Atualizar Dados do Aplicativo");
-                System.out.println("6 - Apagar Aplicativo");
+                System.out.println("8 - Cadastrar Aplicativo");
+                System.out.println("9 - Atualizar Dados do Aplicativo");
+                System.out.println("10 - Apagar Aplicativo");
             }
 
-            int option = InputHelper.getValidOption(1, 6, scanner);
+            int option = InputHelper.getValidOption(1, 10, scanner);
 
             switch(option){
                 case 1:
@@ -53,16 +67,28 @@ public class ApplicationView extends View{
                     searchApplication();
                     break;
                 case 4:
+                    listInstalledApplications();
+                    break;
+                case 5:
+                    installApplication();
+                    break;
+                case 6:
+                    uninstallApplication();
+                    break;
+                case 7:
+                    updateApplications();
+                    break;
+                case 8:
                     if(Main.authService.hasLoggedPublisher()) {
                         registerApplication();
                     } else System.out.println("Esta opção está disponível somente para usuários editores.");
                     break;
-                case 5:
+                case 9:
                     if(Main.authService.hasLoggedPublisher()) {
                         updateApplication();
                     } else System.out.println("Esta opção está disponível somente para usuários editores.");
                     break;
-                case 6:
+                case 10:
                     if(Main.authService.hasLoggedPublisher()) {
                         deleteApplication();
                     } else System.out.println("Esta opção está disponível somente para usuários editores.");
@@ -319,7 +345,7 @@ public class ApplicationView extends View{
             if(confirmDeletion){
                 if(!applicationService.delete(application)){
                     System.err.println("O aplicativo \"" + application.getTitle() + "\" não foi removido devido a um erro.");
-                }
+                } else System.out.println("O aplicativo \"" + application.getTitle() + "\" foi removido com sucesso.");
             }
 
         }
@@ -397,6 +423,117 @@ public class ApplicationView extends View{
     private void listApplications(){
         cleanTerminal();
         applicationService.listAll();
+
+        System.out.println("Pressione ENTER para continuar...");
+        scanner.nextLine();
+    }
+
+    //===================================Installed Applications==========================================================
+
+    //List all applications installed in the user's machine (theoretically)
+    private void listInstalledApplications(){
+        cleanTerminal();
+        installedApplicationsService.listAll();
+
+        System.out.println("Pressione ENTER para continuar...");
+        scanner.nextLine();
+    }
+
+    //Install new applications to the user's machine (theoretically)
+    private void installApplication(){
+        cleanTerminal();
+        System.out.println("===================================");
+        System.out.println("       Instalar Aplicativo");
+        System.out.println("===================================");
+
+        long id = InputHelper.getPositiveLong("Por favor, informe o ID do aplicativo a ser instalado: ",
+                "ID inválido! Por favor, tente novamente.", scanner);
+
+        cleanTerminal();
+
+        Application application = applicationService.search(id);
+        if (application == null) {
+            System.out.println("O aplicativo não foi encontrado no banco de dados e, portanto, não pode ser instalado.");
+        } else {
+            installedApplicationsService.save(application);
+            System.out.println("O aplicativo \"" + application.getTitle() + "\" foi instalado com sucesso.");
+        }
+
+        System.out.println("Pressione ENTER para continuar...");
+        scanner.nextLine();
+    }
+
+    //Remove an applications from the user's machine (theoretically)
+    private void uninstallApplication(){
+        cleanTerminal();
+        System.out.println("===================================");
+        System.out.println("      Desinstalar Aplicativo");
+        System.out.println("===================================");
+
+        long id = InputHelper.getPositiveLong("Por favor, informe o ID do aplicativo a ser removido: ",
+                "ID inválido! Por favor, tente novamente.", scanner);
+
+        cleanTerminal();
+
+        Application application = installedApplicationsService.search(id);
+        if (application == null) {
+            System.out.println("O aplicativo não foi encontrado na máquina local e, portanto, não pode ser removido.");
+        } else {
+            System.out.println("================================================");
+            System.out.println("Desinstalando o aplicativo \"" + application.getTitle() + "\"");
+            System.out.println("================================================");
+            System.out.println(application);
+            System.out.println("================================================");
+
+            boolean confirmDeletion = InputHelper.getValidBoolean("Você tem certeza de que deseja desinstalar o aplicativo selecionado (responda com true - false)? ",
+                    "Resposta inválida! Por favor, tente novamente.", scanner);
+
+            if(confirmDeletion){
+                if(!installedApplicationsService.delete(application)){
+                    System.err.println("O aplicativo \"" + application.getTitle() + "\" não foi desinstalado devido a um erro.");
+                } else System.out.println("O aplicativo \"" + application.getTitle() + "\" foi desinstalado com sucesso.");
+            }
+        }
+
+        System.out.println("Pressione ENTER para continuar...");
+        scanner.nextLine();
+    }
+
+    //Update all applications in the user's machine (theoretically)
+    private void updateApplications(){
+        cleanTerminal();
+        System.out.println("===================================");
+        System.out.println(" Atualizar Aplicativos Instalados");
+        System.out.println("===================================");
+
+        //Get updated apps from the store and compare them with the locally installed to update them (theoretically)
+        List<Application> storeApps = applicationService.getList();
+        List<Application> localApps = installedApplicationsService.getList();
+
+        if(storeApps == null || storeApps.isEmpty()){
+            System.out.println("Não foi possível buscar por atualizações.");
+        } else if (localApps == null || localApps.isEmpty()){
+            System.out.println("Não há aplicativos instalados.");
+        } else {
+            for(Application storeApp: storeApps){
+                for(Application localApp: localApps){
+                    if(storeApp.equals(localApp) && storeApp.compareTo(localApp) > 0){ //An update was found
+                        System.out.println("Há uma atualização disponível para o aplicativo \"" + storeApp.getTitle() + "\":");
+                        System.out.println("Versão " + localApp.getVersion() + " -> Versão " + storeApp.getVersion());
+
+                        boolean updateApp = InputHelper.getValidBoolean("Deseja atualizar o aplicativo (responda com true - false)? ",
+                                "Resposta inválida! Por favor, tente novamente.", scanner);
+
+                        if(updateApp){
+                            System.out.println("Atualizando \"" + storeApp.getTitle() + "\"...");
+                            if(!installedApplicationsService.update(localApp, storeApp)){
+                                System.err.println("O aplicativo \"" + localApp.getTitle() + "\" não foi atualizado devido a um erro.");
+                            } else System.out.println("O aplicativo \"" + localApp.getTitle() + "\" foi atualizado com sucesso.");
+                        }
+                    }
+                }
+            }
+        }
 
         System.out.println("Pressione ENTER para continuar...");
         scanner.nextLine();

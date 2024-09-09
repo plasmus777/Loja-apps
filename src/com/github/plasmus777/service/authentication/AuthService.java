@@ -4,7 +4,6 @@ import com.github.plasmus777.model.authentication.AuthToken;
 import com.github.plasmus777.model.user.Publisher;
 import com.github.plasmus777.model.user.User;
 import com.github.plasmus777.service.Service;
-import com.github.plasmus777.service.user.UserService;
 
 public class AuthService {
 
