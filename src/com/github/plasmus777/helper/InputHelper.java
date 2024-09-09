@@ -17,7 +17,6 @@ public class InputHelper {
             }
             value = scanner.nextLine();
 
-
         } while (value == null || value.isBlank());
 
         return value;
@@ -34,7 +33,7 @@ public class InputHelper {
                 scanner.next();
             }
             value = scanner.nextLong();
-
+            scanner.nextLine();
 
         } while (value <= 0);
 
@@ -52,7 +51,7 @@ public class InputHelper {
                 scanner.next();
             }
             value = scanner.nextFloat();
-
+            scanner.nextLine();
 
         } while (value <= 0);
 
@@ -66,7 +65,10 @@ public class InputHelper {
             System.out.println(errorMessage);
             scanner.next();
         }
-        return scanner.nextBoolean();
+        boolean value = scanner.nextBoolean();
+        scanner.nextLine();
+
+        return value;
     }
 
     //Creates a loop to ask the user for a valid input integer between two values - range: [minimum, maximum]
@@ -80,7 +82,7 @@ public class InputHelper {
                 scanner.next();
             }
             value = scanner.nextInt();
-
+            scanner.nextLine();
 
         } while (value > maximum || value < minimum);
 
