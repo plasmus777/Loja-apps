@@ -1,6 +1,6 @@
 # Loja-apps
 
-<p align="center"><img src="./assets/icons/store.png?raw=true" width="64" height="48"></p>
+<p align="center"><img src="./assets/icons/store.png?raw=true" width="64" height="64"></p>
 
 Um projeto Java de uma possível loja de aplicativos, com o objetivo de permitir que usuários vejam, busquem e instalem diversos programas.
 
