@@ -22,43 +22,45 @@ public class AuthView extends View{
     @Override
     public void show() {
         cleanTerminal();
-        boolean running = true;
-        while(running) {
+//        boolean running = true;
+//        while(running) {
             cleanTerminal();
 
-            System.out.println("===================================");
-            System.out.println("        Sesssão Atual");
-            System.out.println("===================================");
+//            System.out.println("===================================");
+//            System.out.println("        Sesssão Atual");
+//            System.out.println("===================================");
 
             //Check if a user has logged in or not
             if (authService.hasLoggedUser()) {
-                showLoggedUserInfo();
-
-                System.out.println("1 - Fazer Logout");
-                System.out.println("2 - Retornar ao Menu Principal");
-
-                int option = InputHelper.getValidOption(1, 2, scanner);
-
-                switch (option){
-                    case 1:
-                        logOut();
-                        break;
-                    case 2:
-                        System.out.println("Retornando ao menu principal...");
-                        running = false;
-                        break;
-                    default:
-                        System.err.println("Opção inexistente!");
-                        break;
-                }
+                logOut();
+//                showLoggedUserInfo();
+//
+//                System.out.println("1 - Retornar ao Menu Principal");
+//                System.out.println("2 - Fazer Logout");
+//
+//                int option = InputHelper.getValidOption(1, 2, scanner);
+//
+//                switch (option){
+//                    case 1:
+//                        System.out.println("Retornando ao menu principal...");
+//                        running = false;
+//                        break;
+//                    case 2:
+//                        logOut();
+//                        break;
+//                    default:
+//                        System.err.println("Opção inexistente!");
+//                        break;
+//                }
             } else {
                 logIn();
             }
-        }
+//        }
     }
 
     public void logIn(){
-        System.out.println("Desconectado");
+        System.out.println("===================================");
+        System.out.println("             Login");
         System.out.println("===================================");
 
         System.out.println("1 - Fazer Login");
@@ -83,10 +85,16 @@ public class AuthView extends View{
                     cleanTerminal();
                 }
 
+                cleanTerminal();
+
                 if(!authService.logIn(email, password)){
                     System.err.println("Ocorreu um erro ao realizar o login.");
+                } else {
+                    System.out.println("Login realizado com sucesso.");
                 }
 
+                System.out.println("Pressione ENTER para continuar...");
+                scanner.nextLine();
                 break;
             case 2:
                 userView.show();
@@ -98,7 +106,13 @@ public class AuthView extends View{
     }
 
     public void logOut(){
+        System.out.println("===================================");
+        System.out.println("             Logout");
+        System.out.println("===================================");
         authService.logOut();
+
+        System.out.println("Pressione ENTER para continuar...");
+        scanner.nextLine();
     }
 
     public void showLoggedUserInfo(){

@@ -29,42 +29,43 @@ public class ApplicationView extends View{
             System.out.println("===================================");
             System.out.println("       Sistema de Aplicativos");
             System.out.println("===================================");
+
+            System.out.println("1 - Retornar ao Menu Principal");
+            System.out.println("2 - Listar Aplicativos");
+            System.out.println("3 - Buscar Aplicativo");
             if(Main.authService.hasLoggedPublisher()) {
-                System.out.println("1 - Cadastrar Aplicativo");
-                System.out.println("2 - Atualizar Dados do Aplicativo");
-                System.out.println("3 - Apagar Aplicativo");
+                System.out.println("4 - Cadastrar Aplicativo");
+                System.out.println("5 - Atualizar Dados do Aplicativo");
+                System.out.println("6 - Apagar Aplicativo");
             }
-            System.out.println("4 - Buscar Aplicativo");
-            System.out.println("5 - Listar Aplicativos");
-            System.out.println("6 - Retornar ao Menu Principal");
 
             int option = InputHelper.getValidOption(1, 6, scanner);
 
             switch(option){
                 case 1:
-                    if(Main.authService.hasLoggedPublisher()) {
-                        registerApplication();
-                    }
-                    break;
-                case 2:
-                    if(Main.authService.hasLoggedPublisher()) {
-                        updateApplication();
-                    }
-                    break;
-                case 3:
-                    if(Main.authService.hasLoggedPublisher()) {
-                        deleteApplication();
-                    }
-                    break;
-                case 4:
-                    searchApplication();
-                    break;
-                case 5:
-                    listApplications();
-                    break;
-                case 6:
                     System.out.println("Retornando ao menu principal...");
                     running = false;
+                    break;
+                case 2:
+                    listApplications();
+                    break;
+                case 3:
+                    searchApplication();
+                    break;
+                case 4:
+                    if(Main.authService.hasLoggedPublisher()) {
+                        registerApplication();
+                    } else System.out.println("Esta opção está disponível somente para usuários editores.");
+                    break;
+                case 5:
+                    if(Main.authService.hasLoggedPublisher()) {
+                        updateApplication();
+                    } else System.out.println("Esta opção está disponível somente para usuários editores.");
+                    break;
+                case 6:
+                    if(Main.authService.hasLoggedPublisher()) {
+                        deleteApplication();
+                    } else System.out.println("Esta opção está disponível somente para usuários editores.");
                     break;
                 default:
                     System.err.println("Opção inexistente!");
@@ -154,6 +155,9 @@ public class ApplicationView extends View{
         if(!applicationService.save(application)){
             System.err.println("O aplicativo \"" + application.getTitle() + "\" não foi cadastrado devido a um erro.");
         };
+
+        System.out.println("Pressione ENTER para continuar...");
+        scanner.nextLine();
     }
 
     private void updateApplication(){
@@ -281,6 +285,9 @@ public class ApplicationView extends View{
                 System.err.println("O aplicativo \"" + application.getTitle() + "\" não foi atualizado devido a um erro.");
             }
         }
+
+        System.out.println("Pressione ENTER para continuar...");
+        scanner.nextLine();
     }
 
     private void deleteApplication(){
@@ -306,7 +313,7 @@ public class ApplicationView extends View{
             System.out.println("================================================");
             System.out.println(application);
             System.out.println("================================================");
-            boolean confirmDeletion = InputHelper.getValidBoolean("Você tem certeza de que deseja remover o aplicativo selecionado (reponda com true - false)? ",
+            boolean confirmDeletion = InputHelper.getValidBoolean("Você tem certeza de que deseja remover o aplicativo selecionado (responda com true - false)? ",
                     "Resposta inválida! Por favor, tente novamente.", scanner);
 
             if(confirmDeletion){
@@ -316,6 +323,9 @@ public class ApplicationView extends View{
             }
 
         }
+
+        System.out.println("Pressione ENTER para continuar...");
+        scanner.nextLine();
     }
 
     //Id, exact and list
@@ -353,6 +363,9 @@ public class ApplicationView extends View{
                         System.out.println("         Sem Resultados");
                         System.out.println("===================================");
                     }
+
+                    System.out.println("Pressione ENTER para continuar...");
+                    scanner.nextLine();
                     break;
                 case 3: //Search by generic String
                     String search = InputHelper.getValidString("Por favor, informe os termos de pesquisa: ",
@@ -371,16 +384,21 @@ public class ApplicationView extends View{
                         System.out.println("         Sem Resultados");
                         System.out.println("===================================");
                     }
+
+                    System.out.println("Pressione ENTER para continuar...");
+                    scanner.nextLine();
                     break;
                 default:
                     System.err.println("Opção inexistente!");
             }
         }
-
     }
 
     private void listApplications(){
         cleanTerminal();
         applicationService.listAll();
+
+        System.out.println("Pressione ENTER para continuar...");
+        scanner.nextLine();
     }
 }

@@ -122,7 +122,7 @@ public class Application implements Comparable<Application>{
                 "\nVersão: " + getVersion() +
                 "\n" + (isVerified() ? "Verificado" : "Não Verificado") +
                 "\nEditor: " + publisher.getAgencyName() +
-                "\nCategorias: " + categories.toString() +
+                "\nCategorias: " + Arrays.toString(categories) +
                 "\nSobre o projeto: " + getAboutUrl() +
                 "\nDesenvolvimento: " + getDevelopmentUrl() +
                 "\nMD5: " + getMd5() +

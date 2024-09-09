@@ -28,34 +28,34 @@ public class UserView extends View{
             System.out.println("===================================");
             System.out.println("       Sistema de Usuários");
             System.out.println("===================================");
-            System.out.println("1 - Cadastrar Usuário");
-            System.out.println("2 - Atualizar Dados do Usuário");
-            System.out.println("3 - Apagar Usuário");
-            System.out.println("4 - Buscar Usuário");
-            System.out.println("5 - Listar Usuários");
-            System.out.println("6 - Retornar ao Menu de Sessão");
+            System.out.println("1 - Retornar ao Menu Principal");
+            System.out.println("2 - Cadastrar Usuário");
+            System.out.println("3 - Atualizar Dados do Usuário");
+            System.out.println("4 - Apagar Usuário");
+            System.out.println("5 - Buscar Usuário");
+            System.out.println("6 - Listar Usuários");
 
             int option = InputHelper.getValidOption(1, 6, scanner);
 
             switch(option){
                 case 1:
-                    registerUser();
-                    break;
-                case 2:
-                    updateUser();
-                    break;
-                case 3:
-                    deleteUser();
-                    break;
-                case 4:
-                    searchUser();
-                    break;
-                case 5:
-                    listUsers();
-                    break;
-                case 6:
                     System.out.println("Retornando ao menu principal...");
                     running = false;
+                    break;
+                case 2:
+                    registerUser();
+                    break;
+                case 3:
+                    updateUser();
+                    break;
+                case 4:
+                    deleteUser();
+                    break;
+                case 5:
+                    searchUser();
+                    break;
+                case 6:
+                    listUsers();
                     break;
                 default:
                     System.err.println("Opção inexistente!");
@@ -123,6 +123,9 @@ public class UserView extends View{
         if(!userService.save(user)){
             System.err.println("O usuário \"" + user.getUserName() + "\" não foi cadastrado devido a um erro.");
         };
+
+        System.out.println("Pressione ENTER para continuar...");
+        scanner.nextLine();
     }
 
     private void updateUser(){
@@ -233,6 +236,9 @@ public class UserView extends View{
                 System.err.println("O usuário \"" + user.getUserName() + "\" não foi atualizado devido a um erro.");
             }
         }
+
+        System.out.println("Pressione ENTER para continuar...");
+        scanner.nextLine();
     }
 
     private void deleteUser(){
@@ -261,7 +267,7 @@ public class UserView extends View{
             System.out.println("================================================");
             System.out.println(user);
             System.out.println("================================================");
-            boolean confirmDeletion = InputHelper.getValidBoolean("Você tem certeza de que deseja remover o usuário selecionado (reponda com true - false)? ",
+            boolean confirmDeletion = InputHelper.getValidBoolean("Você tem certeza de que deseja remover o usuário selecionado (responda com true - false)? ",
                     "Resposta inválida! Por favor, tente novamente.", scanner);
 
             if(confirmDeletion){
@@ -269,6 +275,8 @@ public class UserView extends View{
                     System.err.println("O usuário \"" + user.getUserName() + "\" não foi removido devido a um erro.");
                 }
             }
+            System.out.println("Pressione ENTER para continuar...");
+            scanner.nextLine();
 
         }
     }
@@ -308,6 +316,9 @@ public class UserView extends View{
                         System.out.println("         Sem Resultados");
                         System.out.println("===================================");
                     }
+
+                    System.out.println("Pressione ENTER para continuar...");
+                    scanner.nextLine();
                     break;
                 case 3: //Search by generic String
                     String search = InputHelper.getValidString("Por favor, informe os termos de pesquisa: ",
@@ -326,16 +337,21 @@ public class UserView extends View{
                         System.out.println("         Sem Resultados");
                         System.out.println("===================================");
                     }
+
+                    System.out.println("Pressione ENTER para continuar...");
+                    scanner.nextLine();
                     break;
                 default:
                     System.err.println("Opção inexistente!");
             }
         }
-
     }
 
     private void listUsers(){
         cleanTerminal();
         userService.listAll();
+
+        System.out.println("Pressione ENTER para continuar...");
+        scanner.nextLine();
     }
 }

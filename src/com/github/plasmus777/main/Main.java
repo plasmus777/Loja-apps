@@ -10,10 +10,7 @@ import com.github.plasmus777.service.Service;
 import com.github.plasmus777.service.application.ApplicationService;
 import com.github.plasmus777.service.authentication.AuthService;
 import com.github.plasmus777.service.user.UserService;
-import com.github.plasmus777.view.ApplicationView;
-import com.github.plasmus777.view.AuthView;
-import com.github.plasmus777.view.UserView;
-import com.github.plasmus777.view.View;
+import com.github.plasmus777.view.*;
 
 import java.util.Scanner;
 
@@ -36,13 +33,13 @@ public class Main {
         //Initialize authService for user authentication purposes
         authService = new AuthService(userService);
 
-        //Utilize interactive views to run the program
-        View userView = new UserView(userService, scanner);
-        View applicationView = new ApplicationView(applicationService, scanner);
-        View authView = new AuthView(userView, scanner);
+        //Create interactive views to run the program
+        View userView = new UserView(userService, scanner);//User management
+        View applicationView = new ApplicationView(applicationService, scanner);//Application management
+        View authView = new AuthView(userView, scanner);//Authentication management
+        View mainView = new MainView(authView, applicationView, userView, scanner);//Main program execution
 
-        //userView.show();
-        //applicationView.show();
-        authView.show();
+        //Run program through the main view
+        mainView.show();
     }
 }
