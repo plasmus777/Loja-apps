@@ -23,6 +23,7 @@ public class ApplicationView extends View{
 
     @Override
     public void show() {
+        cleanTerminal();
         boolean running = true;
         while(running){
             System.out.println("===================================");

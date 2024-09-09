@@ -10,6 +10,8 @@ import com.github.plasmus777.service.Service;
 import com.github.plasmus777.service.application.ApplicationService;
 import com.github.plasmus777.service.authentication.AuthService;
 import com.github.plasmus777.service.user.UserService;
+import com.github.plasmus777.view.ApplicationView;
+import com.github.plasmus777.view.AuthView;
 import com.github.plasmus777.view.UserView;
 import com.github.plasmus777.view.View;
 
@@ -36,7 +38,11 @@ public class Main {
 
         //Utilize interactive views to run the program
         View userView = new UserView(userService, scanner);
+        View applicationView = new ApplicationView(applicationService, scanner);
+        View authView = new AuthView(userView, scanner);
 
-        userView.show();
+        //userView.show();
+        //applicationView.show();
+        authView.show();
     }
 }

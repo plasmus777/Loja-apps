@@ -22,10 +22,11 @@ public class AuthService {
     public boolean logIn(String email, String password){
         if(getLoggedUser() == null){ //No user session
             User user;
-            if(currentToken == null){
-                AuthToken authToken = new AuthToken(email, password);
+            AuthToken authToken = new AuthToken(email, password);
+
+            //Checks if the current token is valid to not need password input or not.
+            if(needsPassword(email)){
                 user = userService.searchExact(email, authToken);
-                currentToken = authToken;
             } else {
                 user = userService.searchExact(email, currentToken);
             }
@@ -33,14 +34,16 @@ public class AuthService {
             if(user != null){
                 if(user.getAuthToken().isTokenValid()){
                     loggedUser = user;
+                    currentToken = user.getAuthToken();
                     return true;
                 } else {
-                    user.setAuthToken(currentToken);
+                    user.setAuthToken(authToken);
                     loggedUser = user;
+                    currentToken = authToken;
                     return true;
                 }
             } else {
-                System.out.println("O usuário não existe no banco de dados.");
+                System.out.println("Dados de login incorretos; o usuário não existe.");
                 return false;
             }
         } else {
@@ -70,5 +73,18 @@ public class AuthService {
         if(hasLoggedUser()){
             return getLoggedUser() instanceof Publisher;
         } else return false;
+    }
+
+    //Method to verify if password inputs are necessary (that is, the current authentication token does not work)
+    public boolean needsPassword(String email){
+        if(currentToken == null || !currentToken.isTokenValid()){
+            return true;
+        } else {
+            User user = userService.searchExact(email, currentToken);
+
+            if (user != null && user.getAuthToken().isTokenValid()) {
+                return false;
+            } else return true;
+        }
     }
 }

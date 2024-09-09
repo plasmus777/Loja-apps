@@ -22,6 +22,7 @@ public class UserView extends View{
 
     @Override
     public void show() {
+        cleanTerminal();
         boolean running = true;
         while(running){
             System.out.println("===================================");
@@ -32,7 +33,7 @@ public class UserView extends View{
             System.out.println("3 - Apagar Usuário");
             System.out.println("4 - Buscar Usuário");
             System.out.println("5 - Listar Usuários");
-            System.out.println("6 - Retornar ao Menu Principal");
+            System.out.println("6 - Retornar ao Menu de Sessão");
 
             int option = InputHelper.getValidOption(1, 6, scanner);
 
