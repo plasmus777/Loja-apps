@@ -433,6 +433,9 @@ public class ApplicationView extends View{
     //List all applications installed in the user's machine (theoretically)
     private void listInstalledApplications(){
         cleanTerminal();
+        System.out.println("===================================");
+        System.out.println("     Aplicativos Instalados");
+        System.out.println("===================================");
         installedApplicationsService.listAll();
 
         System.out.println("Pressione ENTER para continuar...");
@@ -455,8 +458,20 @@ public class ApplicationView extends View{
         if (application == null) {
             System.out.println("O aplicativo não foi encontrado no banco de dados e, portanto, não pode ser instalado.");
         } else {
-            installedApplicationsService.save(application);
-            System.out.println("O aplicativo \"" + application.getTitle() + "\" foi instalado com sucesso.");
+            System.out.println("================================================");
+            System.out.println("Instalando o aplicativo \"" + application.getTitle() + "\"");
+            System.out.println("================================================");
+            System.out.println(application);
+            System.out.println("================================================");
+
+            boolean confirmInstallation = InputHelper.getValidBoolean("Você tem certeza de que deseja instalar o aplicativo selecionado (responda com true - false)? ",
+                    "Resposta inválida! Por favor, tente novamente.", scanner);
+
+            if(confirmInstallation){
+                if(!installedApplicationsService.save(application)) {
+                    System.err.println("O aplicativo \"" + application.getTitle() + "\" não foi instalado com sucesso devido a um erro.");
+                } else System.out.println("O aplicativo \"" + application.getTitle() + "\" foi instalado com sucesso.");
+            }
         }
 
         System.out.println("Pressione ENTER para continuar...");
@@ -503,7 +518,7 @@ public class ApplicationView extends View{
     private void updateApplications(){
         cleanTerminal();
         System.out.println("===================================");
-        System.out.println(" Atualizar Aplicativos Instalados");
+        System.out.println("     Buscar por Atualizações");
         System.out.println("===================================");
 
         //Get updated apps from the store and compare them with the locally installed to update them (theoretically)
@@ -518,17 +533,26 @@ public class ApplicationView extends View{
             for(Application storeApp: storeApps){
                 for(Application localApp: localApps){
                     if(storeApp.equals(localApp) && storeApp.compareTo(localApp) > 0){ //An update was found
+                        cleanTerminal();
+                        System.out.println("================================================");
                         System.out.println("Há uma atualização disponível para o aplicativo \"" + storeApp.getTitle() + "\":");
                         System.out.println("Versão " + localApp.getVersion() + " -> Versão " + storeApp.getVersion());
+                        System.out.println("================================================");
 
                         boolean updateApp = InputHelper.getValidBoolean("Deseja atualizar o aplicativo (responda com true - false)? ",
                                 "Resposta inválida! Por favor, tente novamente.", scanner);
 
                         if(updateApp){
+                            cleanTerminal();
+                            System.out.println("================================================");
                             System.out.println("Atualizando \"" + storeApp.getTitle() + "\"...");
                             if(!installedApplicationsService.update(localApp, storeApp)){
                                 System.err.println("O aplicativo \"" + localApp.getTitle() + "\" não foi atualizado devido a um erro.");
                             } else System.out.println("O aplicativo \"" + localApp.getTitle() + "\" foi atualizado com sucesso.");
+                            System.out.println("================================================");
+
+                            System.out.println("Pressione ENTER para continuar...");
+                            scanner.nextLine();
                         }
                     }
                 }
