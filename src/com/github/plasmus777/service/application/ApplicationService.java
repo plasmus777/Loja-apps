@@ -11,7 +11,7 @@ import java.util.List;
 public class ApplicationService implements Service<Application, Publisher> {
 
     private Database<Application> applicationDatabase;
-    private static long CURRENT_ID = 1;
+    private long currentId = 1;
 
     public ApplicationService(Database<Application> applicationDatabase){
         setApplicationDatabase(applicationDatabase);
@@ -74,7 +74,7 @@ public class ApplicationService implements Service<Application, Publisher> {
         //Check if the application has been saved successfully, attributing an id
         boolean returnValue = getApplicationDatabase().save(application);
         if(returnValue){
-            application.setId(CURRENT_ID++);
+            application.setId(currentId++);
         }
 
         return returnValue;
