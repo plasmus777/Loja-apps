@@ -24,6 +24,7 @@ public class UserView extends View{
         cleanTerminal();
         boolean running = true;
         while(running){
+            cleanTerminal();
             System.out.println("===================================");
             System.out.println("       Sistema de Usuários");
             System.out.println("===================================");

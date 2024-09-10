@@ -28,6 +28,7 @@ public class MainView extends View{
         cleanTerminal();
         boolean running = true;
         while(running){
+            cleanTerminal();
             System.out.println("===================================");
             System.out.println(" Loja de Aplicativos - versão 1.0");
             System.out.println("===================================");

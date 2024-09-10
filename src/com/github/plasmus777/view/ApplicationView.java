@@ -120,15 +120,16 @@ public class ApplicationView extends View{
         float version = InputHelper.getPositiveFloat("Por favor, informe a versão atual do aplicativo: ",
                 "Versão inválida! Por favor, tente novamente.", scanner);
 
-        cleanTerminal();
-
         //hasLoggedPublisher == true -> current logged user will be the publisher
         Publisher publisher = (Publisher) Main.authService.getLoggedUser();
 
         boolean addingCategories = true;
         List<Category> categories = new ArrayList<>();
         do{
+            cleanTerminal();
+            System.out.println("===================================");
             System.out.println("Lista de categorias existentes: \nINTERNET, UTILITIES, SYSTEM, AUDIO, VIDEO, EDUCATION, GRAPHICS, OFFICE, DEVELOPMENT, PRODUCTIVITY, GAMES, OTHER\n");
+
 
             String categoryName = InputHelper.getValidString("Por favor, informe o nome da categoria para o aplicativo: ",
                     "Nome de categoria inválido! Por favor, tente novamente.", scanner);
@@ -150,6 +151,7 @@ public class ApplicationView extends View{
                 System.out.println("O aplicativo deve pertencer obrigatoriamente a pelo menos uma categoria!");
             }
 
+            System.out.println("===================================");
         } while(addingCategories || categories.isEmpty());
 
         cleanTerminal();
@@ -180,7 +182,7 @@ public class ApplicationView extends View{
 
         if(!applicationService.save(application)){
             System.err.println("O aplicativo \"" + application.getTitle() + "\" não foi cadastrado devido a um erro.");
-        };
+        } else System.out.println("O aplicativo \"" + application.getTitle() + "\" foi cadastrado com sucesso.");
 
         System.out.println("Pressione ENTER para continuar...");
         scanner.nextLine();
