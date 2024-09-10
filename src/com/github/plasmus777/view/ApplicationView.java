@@ -560,8 +560,5 @@ public class ApplicationView extends View{
                 }
             }
         }
-
-        System.out.println("Pressione ENTER para continuar...");
-        scanner.nextLine();
     }
 }
