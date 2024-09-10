@@ -7,7 +7,7 @@ Um projeto Java de uma possível loja de aplicativos, com o objetivo de permitir
 ## Objetivo
 
 <p>O Projeto tem como objetivo implementar um sistema semelhante a uma loja de aplicativos, permitindo que o usuário gerencie aplicativos na própria loja e também na máquina local.</p>
-<p>Por enquanto, o sistema lida apenas com abstrações de cada modelo de dados. Contudo, é possível realizar adaptações para que o sistema utilize uma API externa ou até instale programas reais na máquina local.</p>
+<p>Por enquanto, o sistema lida apenas com abstrações de cada modelo de dados. Contudo, é possível realizar adaptações para que uma API externa seja utilizada ou até para que programas reais sejam instalados na máquina local.</p>
 
 
 ---
