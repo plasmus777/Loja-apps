@@ -14,7 +14,29 @@ Um projeto Java de uma possível loja de aplicativos, com o objetivo de permitir
 
 ## Funcionalidades
 
+## Aplicativos
+- Listar aplicativos disponíveis na loja;
+- Buscar por um aplicativo utilizando um identificador ou termos de pesquisa;
+#### Funcionalidades disponíveis quando um usuário está conectado:
+- Listar aplicativos instalados;
+- Instalar aplicativos;
+- Desinstalar aplicativos;
+- Atualizar todos os aplicativos instalados;
+#### Funcionalidades disponíveis quando um usuário editor está conectado:
+- Cadastrar um aplicativo na loja;
+- Atualizar um aplicativo na loja (do editor conectado);
+- Apagar um aplicativo da loja (do editor conectado).
 
+## Usuários
+- Cadastrar um novo usuário (comum ou editor);
+- Atualizar um usuário existente (requer e-mail e senha);
+- Apagar um usuário existente (requer e-mail e senha);
+- Buscar por um usuário utilizando um identificador ou termos de pesquisa;
+- Listar usuários existentes.
+
+## Login
+- Tem o propósito de conectar um usuário para desbloquear funcionalidades do sistema.
+- 
 
 ---
 

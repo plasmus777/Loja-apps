@@ -43,11 +43,13 @@ public class ApplicationView extends View{
             System.out.println("1 - Retornar ao Menu Principal");
             System.out.println("2 - Listar Aplicativos");
             System.out.println("3 - Buscar Aplicativo");
-            System.out.println("4 - Listar Aplicativos Instalados");
-            System.out.println("5 - Instalar Aplicativo");
-            System.out.println("6 - Desinstalar Aplicativo");
-            System.out.println("7 - Atualizar Aplicativos Instalados");
-            if(Main.authService.hasLoggedPublisher()) {
+            if(Main.authService.hasLoggedUser()) {//User locked functionality
+                System.out.println("4 - Listar Aplicativos Instalados");
+                System.out.println("5 - Instalar Aplicativo");
+                System.out.println("6 - Desinstalar Aplicativo");
+                System.out.println("7 - Atualizar Aplicativos Instalados");
+            }
+            if(Main.authService.hasLoggedPublisher()) {//Publisher locked functionality
                 System.out.println("8 - Cadastrar Aplicativo");
                 System.out.println("9 - Atualizar Dados do Aplicativo");
                 System.out.println("10 - Apagar Aplicativo");
@@ -67,16 +69,24 @@ public class ApplicationView extends View{
                     searchApplication();
                     break;
                 case 4:
-                    listInstalledApplications();
+                    if(Main.authService.hasLoggedUser()) {
+                        listInstalledApplications();
+                    } else System.out.println("Esta opção está disponível somente para usuários conectados.");
                     break;
                 case 5:
-                    installApplication();
+                    if(Main.authService.hasLoggedUser()) {
+                        installApplication();
+                    } else System.out.println("Esta opção está disponível somente para usuários conectados.");
                     break;
                 case 6:
-                    uninstallApplication();
+                    if(Main.authService.hasLoggedUser()) {
+                        uninstallApplication();
+                    } else System.out.println("Esta opção está disponível somente para usuários conectados.");
                     break;
                 case 7:
-                    updateApplications();
+                    if(Main.authService.hasLoggedUser()) {
+                        updateApplications();
+                    } else System.out.println("Esta opção está disponível somente para usuários conectados.");
                     break;
                 case 8:
                     if(Main.authService.hasLoggedPublisher()) {
