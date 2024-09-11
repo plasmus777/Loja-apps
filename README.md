@@ -4,12 +4,16 @@ Um projeto Java de uma possível loja de aplicativos, permitindo que usuários v
 
 ---
 
+<br></br>
+
 ## Objetivo e Motivação
 <p>O Projeto tem como objetivo implementar um sistema semelhante a uma loja de aplicativos, permitindo que o usuário gerencie aplicativos na própria loja e também na máquina local.</p>
 <p>Por enquanto, o sistema lida apenas com abstrações de cada modelo de dados. Contudo, é possível realizar adaptações para que uma API externa seja utilizada ou até para que programas reais sejam instalados na máquina local.</p>
 <p>A ideia principal é permitir que usuários de computadores possam utilizar softwares mais atualizados de maneira mais prática, facilitando a manutenção de múltiplos dispositivos, obtendo mais atualizações de segurança e evitando possíveis problemas gerados por uma instalação manual indevida.</p>
 
 ---
+
+<br></br>
 
 ## Funcionalidades
 
@@ -38,6 +42,8 @@ Um projeto Java de uma possível loja de aplicativos, permitindo que usuários v
 - Ao conectar, gera um token de acesso que evita ao usuário ter que utilizar a senha dentro de um período de um dia, ou até que outro usuário faça login.
 
 ---
+
+<br></br>
 
 ## Design
 
@@ -73,6 +79,8 @@ Um projeto Java de uma possível loja de aplicativos, permitindo que usuários v
 </details>
 
 ---
+
+<br></br>
 
 ## Download, compilação e execução
 > [!WARNING]
